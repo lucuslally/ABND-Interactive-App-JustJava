@@ -9,6 +9,7 @@
 package com.example.android.justjava;
 
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -24,10 +25,21 @@ import static com.example.android.justjava.R.layout.activity_main;
 public class MainActivity extends AppCompatActivity {
     int quantity = 0;
 
+//    @Override
+//    protected void onCreate(Bundle savedInstanceState) {
+//        super.onCreate(savedInstanceState);
+//        setContentView(activity_main);
+//    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(activity_main);
+
+        TextView textView = new TextView(this);
+        textView.setText("Hello Beeb");
+        textView.setTextSize(24);
+        textView.setTextColor(Color.DKGRAY);
+
+        setContentView(textView);
     }
 
     /**
