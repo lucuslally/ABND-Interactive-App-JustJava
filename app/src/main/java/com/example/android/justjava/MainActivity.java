@@ -9,13 +9,12 @@
 package com.example.android.justjava;
 
 
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
+import android.widget.CheckBox;
 import android.widget.TextView;
-
-import java.text.NumberFormat;
 
 import static com.example.android.justjava.R.layout.activity_main;
 
@@ -24,6 +23,8 @@ import static com.example.android.justjava.R.layout.activity_main;
  */
 public class MainActivity extends AppCompatActivity {
     int quantity = 0;
+    boolean hasWhip = false;
+    boolean hasChocolate = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,18 +52,21 @@ public class MainActivity extends AppCompatActivity {
      */
     public void submitOrder(View view) {
         int price = calculatePrice(quantity, 5);
-        displayMessage(createOrderSummary(price));
+        displayMessage(createOrderSummary(price, hasWhip, hasChocolate));
     }
 
     /**
      * Create summary of the order
      *
      * @param price value used previously for calculatePrice method
+     * @param hasWhip
      * @return string summary
      */
 
-    private String createOrderSummary(int price) {
-        String priceMessage = "Name: Kaptain Kunal";
+    private String createOrderSummary(int price, boolean hasWhip, boolean hasChocolate) {
+        String priceMessage = "Name: Lyla the Labyrinth";
+        priceMessage += "\nAdd whipped cream? " + hasWhip;
+        priceMessage += "\nAdd chocolate? " + hasChocolate;
         priceMessage += "\nQuantity: " + quantity;
         priceMessage += "\nTotal: $" + price;
         priceMessage += "\nThank You!";
@@ -108,5 +112,18 @@ public class MainActivity extends AppCompatActivity {
     private void displayMessage(String message) {
         TextView orderSummaryTextView = findViewById(R.id.order_summary_text_view);
         orderSummaryTextView.setText(message);
+    }
+
+    public boolean checkForWhip (View view) {
+        CheckBox whipCreamCheckBox = findViewById(R.id.whipcream_checkbox);
+        hasWhip = whipCreamCheckBox.isChecked();
+        //Log.v("Main Activity","The value of hasWHipCream = " + hasWhip);
+        return hasWhip;
+    }
+    public boolean checkForChocolate (View view) {
+        CheckBox chocolateCheckBox = findViewById(R.id.chocolate_checkbox);
+        hasChocolate = chocolateCheckBox.isChecked();
+        //Log.v("Main Activity","The value of hasChocolate = " + hasChocolate);
+        return hasChocolate;
     }
 }
