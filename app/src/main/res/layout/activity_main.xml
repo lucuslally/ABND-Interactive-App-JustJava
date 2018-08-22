@@ -8,10 +8,46 @@
     tools:context=".MainActivity">
 
     <TextView
+        android:id="@+id/toppings_textview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="Toppings"
+        android:textAllCaps="true" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <CheckBox
+            android:id="@+id/whipcream_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/toppings_textview"
+            android:layout_marginStart="8dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/toppings_textview"
+            android:layout_marginBottom="16dp"
+            android:layout_marginStart="24dp"
+            android:layout_toRightOf="@+id/whipcream_button"
+            android:text="Whipped Cream"
+            android:textAllCaps="true"
+            android:textSize="16sp" />
+
+    </LinearLayout>
+
+    <TextView
         android:id="@+id/quantityHeader"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
+        android:layout_marginTop="8dp"
         android:layout_marginStart="8dp"
         android:text="Quantity"
         android:textAllCaps="true" />

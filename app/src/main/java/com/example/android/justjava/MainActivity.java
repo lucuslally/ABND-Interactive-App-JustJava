@@ -25,22 +25,26 @@ import static com.example.android.justjava.R.layout.activity_main;
 public class MainActivity extends AppCompatActivity {
     int quantity = 0;
 
-//    @Override
-//    protected void onCreate(Bundle savedInstanceState) {
-//        super.onCreate(savedInstanceState);
-//        setContentView(activity_main);
-//    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        TextView textView = new TextView(this);
-        textView.setText("Hello Beeb");
-        textView.setTextSize(24);
-        textView.setTextColor(Color.DKGRAY);
-
-        setContentView(textView);
+        setContentView(activity_main);
     }
+
+    /**
+     * Practice calling methods
+     */
+//    @Override
+//    protected void onCreate(Bundle savedInstanceState) {
+//        super.onCreate(savedInstanceState);
+//
+//        TextView textView = new TextView(this);
+//        textView.setText("Hello Beeb");
+//        textView.setTextSize(24);
+//        textView.setTextColor(Color.DKGRAY);
+//
+//        setContentView(textView);
+//    }
 
     /**
      * This method is called when the order button is clicked.
@@ -102,7 +106,7 @@ public class MainActivity extends AppCompatActivity {
      * This method displays the given text on the screen.
      */
     private void displayMessage(String message) {
-        TextView orderSummaryTextView = (TextView) findViewById(R.id.order_summary_text_view);
+        TextView orderSummaryTextView = findViewById(R.id.order_summary_text_view);
         orderSummaryTextView.setText(message);
     }
 }
