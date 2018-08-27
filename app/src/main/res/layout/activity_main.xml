@@ -8,8 +8,19 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical">
+
+        <EditText
+            android:id="@+id/editText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginTop="8dp"
+            android:inputType="textPersonName"
+            android:hint="@string/name" />
 
         <TextView
             android:id="@+id/toppings_textview"
@@ -17,9 +28,9 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:text="Toppings"
-            android:textAllCaps="true" />
+            android:layout_marginTop="16dp"
+            android:text="@string/toppings"
+            style="@style/HeaderTextStyle" />
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -31,8 +42,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:onClick="checkForWhip"
+                android:layout_marginStart="8dp"
                 android:paddingLeft="24dp"
-                android:text="Whipped Cream"
+                android:text="@string/whipped_cream"
                 android:textSize="16sp" />
 
         </LinearLayout>
@@ -47,7 +59,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingLeft="24dp"
-                android:text="Chocolate"
+                android:layout_marginStart="8dp"
+                android:text="@string/chocolate"
                 android:onClick="checkForChocolate"
                 android:textSize="16sp" />
 
@@ -60,8 +73,8 @@
             android:layout_marginBottom="16dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="16dp"
-            android:text="Quantity"
-            android:textAllCaps="true" />
+            android:text="@string/quantity"
+            style="@style/HeaderTextStyle" />
 
         <LinearLayout
             android:id="@+id/linearLayout"
@@ -83,8 +96,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
                 android:layout_marginStart="8dp"
-                android:layout_toStartOf="@+id/minus_button"
-                android:text="0"
+                android:text="1"
                 android:textColor="#000000"
                 android:textSize="16sp" />
 
@@ -92,28 +104,9 @@
                 android:id="@+id/plus_button"
                 android:layout_width="48dp"
                 android:layout_height="48dp"
-                android:layout_toStartOf="@+id/quantity_text_view"
                 android:onClick="incrementOrder"
                 android:text="+" />
         </LinearLayout>
-
-        <TextView
-            android:id="@+id/orderSummaryHeader"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="16dp"
-            android:text="Order Summary"
-            android:textAllCaps="true" />
-
-        <TextView
-            android:id="@+id/order_summary_text_view"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="16dp"
-            android:text="$0.00"
-            android:textColor="#000000" />
 
         <Button
             android:id="@+id/button"
@@ -122,6 +115,8 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="16dp"
             android:onClick="submitOrder"
-            android:text="Order" />
+            android:background="@color/colorAccent"
+            android:textColor="@color/btnText"
+            android:text="@string/order" />
     </LinearLayout>
 </ScrollView>

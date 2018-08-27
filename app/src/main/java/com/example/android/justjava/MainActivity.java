@@ -9,12 +9,17 @@
 package com.example.android.justjava;
 
 
+import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
+import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import static com.example.android.justjava.R.layout.activity_main;
 
@@ -22,7 +27,7 @@ import static com.example.android.justjava.R.layout.activity_main;
  * This app displays an order form to order coffee.
  */
 public class MainActivity extends AppCompatActivity {
-    int quantity = 0;
+    int quantity = 1;
     boolean hasWhip = false;
     boolean hasChocolate = false;
 
@@ -51,8 +56,17 @@ public class MainActivity extends AppCompatActivity {
      * This method is called when the order button is clicked.
      */
     public void submitOrder(View view) {
-        int price = calculatePrice(quantity, 5);
-        displayMessage(createOrderSummary(price, hasWhip, hasChocolate));
+
+        // Find Name input and get value
+        EditText nameField = findViewById(R.id.editText);
+        String name = nameField.getText().toString();
+
+        // calculate price
+        int price = calculatePrice(quantity, 5,1,2);
+
+
+        // display it and send email "mkhcreative@gmail.com"
+        createOrderSummary(price, hasWhip, hasChocolate, name);
     }
 
     /**
@@ -63,13 +77,14 @@ public class MainActivity extends AppCompatActivity {
      * @return string summary
      */
 
-    private String createOrderSummary(int price, boolean hasWhip, boolean hasChocolate) {
-        String priceMessage = "Name: Lyla the Labyrinth";
-        priceMessage += "\nAdd whipped cream? " + hasWhip;
-        priceMessage += "\nAdd chocolate? " + hasChocolate;
-        priceMessage += "\nQuantity: " + quantity;
-        priceMessage += "\nTotal: $" + price;
-        priceMessage += "\nThank You!";
+    private String createOrderSummary(int price, boolean hasWhip, boolean hasChocolate, String name) {
+        String priceMessage = getString(R.string.order_summary_name, name);
+        priceMessage += "\n" + getString(R.string.order_summary_whipped_cream, hasWhip);
+        priceMessage += "\n" + getString(R.string.order_summary_chocolate, hasChocolate);
+        priceMessage += "\n" + getString(R.string.order_summary_quantity, quantity);
+        priceMessage += "\n" + getString(R.string.order_summary_price, price);
+        priceMessage += "\n" + getString(R.string.thank_you);
+        composeEmail("lucuslally1@gmail.com","Just Java coffee order for " + name , priceMessage);
         return priceMessage;
     }
 
@@ -78,24 +93,55 @@ public class MainActivity extends AppCompatActivity {
      *
      * @param quantity is number of coffees ordered
      */
-    private int calculatePrice(int quantity, int pricePerCup) {
-        return quantity * pricePerCup;
+    private int calculatePrice(int quantity, int pricePerCup, int whipPrice, int chocoPrice) {
+        int total = 0;
+        if (hasWhip & hasChocolate){
+            total = whipPrice + chocoPrice + (quantity * pricePerCup);
+        } else if (hasWhip) {
+            total = whipPrice + (quantity * pricePerCup);
+        } else if (hasChocolate){
+            total = chocoPrice + (quantity * pricePerCup);
+        } else {
+            total = quantity * pricePerCup;
+        }
+        return total;
     }
 
     /**
      * This method is called when the plus button is clicked
      **/
     public void incrementOrder(View view) {
-        quantity++;
-        displayQuantity(quantity);
+        if (quantity < 100){
+            quantity++;
+            displayQuantity(quantity);
+            Context context = getApplicationContext();
+            return;
+        } else {
+            Context context = getApplicationContext();
+            CharSequence text = "That's too many coffees of us!";
+            int duration = Toast.LENGTH_SHORT;
+
+            Toast toast = Toast.makeText(context, text, duration);
+            toast.show();
+        }
     }
 
     /**
      * This method is called when the minus button is clicked
      **/
     public void decrementOrder(View view) {
-        quantity--;
-        displayQuantity(quantity);
+        if (quantity > 0){
+            quantity--;
+            displayQuantity(quantity);
+            return;
+        } else {
+            Context context = getApplicationContext();
+            CharSequence text = "Please enter valid number of coffees";
+            int duration = Toast.LENGTH_SHORT;
+
+            Toast toast = Toast.makeText(context, text, duration);
+            toast.show();
+        }
     }
 
     /**
@@ -104,14 +150,6 @@ public class MainActivity extends AppCompatActivity {
     private void displayQuantity(int numberOfCoffees) {
         TextView quantityTextView = findViewById(R.id.quantity_text_view);
         quantityTextView.setText("" + numberOfCoffees);
-    }
-
-    /**
-     * This method displays the given text on the screen.
-     */
-    private void displayMessage(String message) {
-        TextView orderSummaryTextView = findViewById(R.id.order_summary_text_view);
-        orderSummaryTextView.setText(message);
     }
 
     public boolean checkForWhip (View view) {
@@ -125,5 +163,15 @@ public class MainActivity extends AppCompatActivity {
         hasChocolate = chocolateCheckBox.isChecked();
         //Log.v("Main Activity","The value of hasChocolate = " + hasChocolate);
         return hasChocolate;
+    }
+    public void composeEmail(String address, String subject, String emailBody) {
+        Intent intent = new Intent(Intent.ACTION_SENDTO);
+        intent.setData(Uri.parse("mailto:")); // only email apps should handle this
+        intent.putExtra(Intent.EXTRA_EMAIL, address);
+        intent.putExtra(Intent.EXTRA_SUBJECT, subject);
+        intent.putExtra(android.content.Intent.EXTRA_TEXT,emailBody);
+        if (intent.resolveActivity(getPackageManager()) != null) {
+            startActivity(intent);
+        }
     }
 }
